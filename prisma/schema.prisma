@@ -1,0 +1,116 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model alarm_code {
+  ac_idx   Int       @id @default(autoincrement())
+  ac_name  String?   @db.VarChar(50)
+  reg_date DateTime? @default(now()) @db.DateTime(0)
+}
+
+/// This table is a partition table and requires additional setup for migrations. Visit https://pris.ly/d/partition-tables for more info.
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model alarm_data {
+  ad_idx   Int      @default(autoincrement())
+  di_idx   Int
+  ac_idx   Int
+  reg_date DateTime @default(now()) @db.DateTime(0)
+
+  @@id([ad_idx, reg_date])
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model alarm_setting {
+  as_idx    Int      @id @default(autoincrement())
+  di_idx    Int
+  as_batSet Int
+  as_ouSet  Int
+  mod_date  DateTime @default(now()) @db.DateTime(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model collect_code {
+  cc_idx   Int      @id @default(autoincrement())
+  cc_name  String   @db.VarChar(50)
+  reg_date DateTime @default(now()) @db.DateTime(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model device_info {
+  di_idx   Int      @id @default(autoincrement())
+  di_name  String   @db.VarChar(50)
+  di_lat   Float    @db.Float
+  di_lng   Float    @db.Float
+  di_ip    String?  @db.VarChar(50)
+  mod_date DateTime @default(now()) @db.DateTime(0)
+}
+
+model device_setting {
+  des_idx       Int       @id @default(autoincrement())
+  di_idx        Int?
+  des_ouOver    Int?
+  des_delayTime Int?
+  mod_date      DateTime? @default(now()) @db.DateTime(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model device_state {
+  ds_idx           Int      @id @default(autoincrement())
+  di_idx           Int
+  ds_door          Int      @default(0)
+  ds_bat           Int
+  ds_collect       Int      @default(1)
+  ds_remoteCollect Int      @default(1)
+  mod_date         DateTime @default(now()) @db.DateTime(0)
+}
+
+model notification_setting {
+  ns_idx        Int      @id @default(autoincrement())
+  di_idx        Int
+  ns_ouOver     Boolean
+  ns_doorOpen   Boolean
+  ns_lowBattery Boolean
+  ns_collect    Boolean
+  mod_date      DateTime @default(now()) @db.DateTime(0)
+}
+
+/// This table is a partition table and requires additional setup for migrations. Visit https://pris.ly/d/partition-tables for more info.
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model sensor_data {
+  sd_idx   Int      @default(autoincrement())
+  di_idx   Int
+  sd_mos   Float    @db.Float
+  sd_ou    Int
+  reg_date DateTime @default(now()) @db.DateTime(0)
+
+  @@id([sd_idx, reg_date])
+}
+
+model user {
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  name     String?
+  password String
+  token    String?
+  reg_date DateTime @default(now()) @db.DateTime(0)
+}
+
+/// This table is a partition table and requires additional setup for migrations. Visit https://pris.ly/d/partition-tables for more info.
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model weather_data {
+  wd_idx   Int      @default(autoincrement())
+  di_idx   Int?
+  wd_temp  Float?   @db.Float
+  wd_humi  Float?   @db.Float
+  wd_wdd   Int?
+  wd_wds   Float?   @db.Float
+  reg_date DateTime @default(now()) @db.DateTime(0)
+
+  @@id([wd_idx, reg_date])
+}
