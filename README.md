@@ -2,7 +2,9 @@
 
 태성 환경 연구소에게 의뢰받은 악취 모니터링 앱의 서버측 코드 입니다.
 
-## Stack
+## Primary tech
 
 - Nest.js
 - Prisma
+- RestAPI
+- Socket.io
