@@ -1,18 +1,14 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from './dto/create-user.dto';
 import { PrismaService } from 'prisma.service';
 import { hashPassword } from 'src/auth/auth.utils';
 
 @Injectable()
 export class UserService {
-  constructor(
-    private jwtService: JwtService,
-    private prisma: PrismaService,
-  ) {}
+  constructor(private prisma: PrismaService) {}
 
   async createUser(createUserDto: CreateUserDto) {
-    const { email, password } = createUserDto;
+    const { email, password, name } = createUserDto;
 
     const existingUser = await this.prisma.user.findUnique({
       where: {
@@ -28,6 +24,7 @@ export class UserService {
 
     const user = await this.prisma.user.create({
       data: {
+        name,
         email,
         password: hashedPassword,
       },
@@ -42,5 +39,18 @@ export class UserService {
     return {
       message: '유저 생성에 성공했습니다.',
     };
+  }
+
+  async getUser(userEmail: string) {
+    return await this.prisma.user.findUnique({
+      where: {
+        email: userEmail,
+      },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+      },
+    });
   }
 }

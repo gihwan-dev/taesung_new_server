@@ -43,12 +43,13 @@ model collect_code {
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model device_info {
-  di_idx   Int      @id @default(autoincrement())
-  di_name  String   @db.VarChar(50)
-  di_lat   Float    @db.Float
-  di_lng   Float    @db.Float
-  di_ip    String?  @db.VarChar(50)
-  mod_date DateTime @default(now()) @db.DateTime(0)
+  di_idx       Int      @id @default(autoincrement())
+  di_name      String   @db.VarChar(50)
+  di_lat       Float    @db.Float
+  di_lng       Float    @db.Float
+  di_ip        String?  @db.VarChar(50)
+  mod_date     DateTime @default(now()) @db.DateTime(0)
+  di_nick_name String?  @db.VarChar(50)
 }
 
 model device_setting {
