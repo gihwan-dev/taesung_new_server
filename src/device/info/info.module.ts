@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common';
 import { InfoService } from './info.service';
-import { InfoGateway } from './info.gateway';
+import { InfoController } from './info.controller';
+import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'prisma.service';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
-  providers: [InfoGateway, InfoService, PrismaService],
+  controllers: [InfoController],
+  providers: [InfoService, JwtService, PrismaService, ConfigService],
 })
 export class InfoModule {}
