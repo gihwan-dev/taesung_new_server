@@ -9,6 +9,7 @@ import { SettingModule } from './device/setting/setting.module';
 import { SensorModule } from './device/sensor/sensor.module';
 import { CollectCodeModule } from './collect-code/collect-code.module';
 import { InfoModule } from './device/info/info.module';
+import { WeatherModule } from './weather/weather.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { InfoModule } from './device/info/info.module';
     StateModule,
     SensorModule,
     CollectCodeModule,
+    WeatherModule,
   ],
   controllers: [AppController],
   providers: [AppService],
