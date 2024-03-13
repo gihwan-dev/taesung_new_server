@@ -10,6 +10,8 @@ import { SensorModule } from './device/sensor/sensor.module';
 import { CollectCodeModule } from './collect-code/collect-code.module';
 import { InfoModule } from './device/info/info.module';
 import { WeatherModule } from './weather/weather.module';
+import { SensorRestModule } from './sensor-rest/sensor-rest.module';
+import { WeatherRestModule } from './weather-rest/weather-rest.module';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { WeatherModule } from './weather/weather.module';
     SensorModule,
     CollectCodeModule,
     WeatherModule,
+    SensorRestModule,
+    WeatherRestModule,
   ],
   controllers: [AppController],
   providers: [AppService],

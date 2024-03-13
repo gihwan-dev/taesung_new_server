@@ -18,4 +18,24 @@ export class StateGateway {
     console.log('findOneDeviceState', findOneResult);
     client.emit('findOneDeviceState', findOneResult);
   }
+
+  @SubscribeMessage('startCollect')
+  async startCollect(
+    @MessageBody() id: number,
+    @ConnectedSocket() client: Socket,
+  ) {
+    const result = await this.stateService.startCollect(id);
+    console.log('startCollect result: ', result);
+    client.emit('findOneDeviceState', result);
+  }
+
+  @SubscribeMessage('resetCollect')
+  async resetCollect(
+    @MessageBody() id: number,
+    @ConnectedSocket() client: Socket,
+  ) {
+    const result = await this.stateService.resetCollect(id);
+    console.log('resetCollect result: ', result);
+    client.emit('findOneDeviceState', result);
+  }
 }
