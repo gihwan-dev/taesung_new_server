@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { PrismaService } from 'prisma.service';
+import { PrismaService } from 'src/prisma.service';
 import { SignInDto } from './dto/sign-in.dto';
 import { comparePassword } from './auth.utils';
 

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { SensorRestService } from './sensor-rest.service';
 import { SensorRestController } from './sensor-rest.controller';
-import { PrismaService } from 'prisma.service';
+import { PrismaService } from 'src/prisma.service';
 
 @Module({
   controllers: [SensorRestController],

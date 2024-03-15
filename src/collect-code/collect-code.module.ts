@@ -1,12 +1,10 @@
 import { Module } from '@nestjs/common';
 import { CollectCodeService } from './collect-code.service';
 import { CollectCodeController } from './collect-code.controller';
-import { PrismaService } from 'prisma.service';
-import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
+import { PrismaService } from 'src/prisma.service';
 
 @Module({
   controllers: [CollectCodeController],
-  providers: [CollectCodeService, PrismaService, ConfigService, JwtService],
+  providers: [CollectCodeService, PrismaService],
 })
 export class CollectCodeModule {}

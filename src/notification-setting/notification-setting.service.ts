@@ -2,15 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
-export class WeatherService {
+export class NotificationSettingService {
   constructor(private readonly prisma: PrismaService) {}
-  async findOne(id: number) {
-    return await this.prisma.weather_data.findFirst({
+
+  async getNotificationSetting(id: number) {
+    return await this.prisma.notification_setting.findFirst({
       where: {
         di_idx: id,
-      },
-      orderBy: {
-        reg_date: 'desc',
       },
     });
   }

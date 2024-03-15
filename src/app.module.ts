@@ -12,6 +12,10 @@ import { InfoModule } from './device/info/info.module';
 import { WeatherModule } from './weather/weather.module';
 import { SensorRestModule } from './sensor-rest/sensor-rest.module';
 import { WeatherRestModule } from './weather-rest/weather-rest.module';
+import { AlarmCodeModule } from './alarm-code/alarm-code.module';
+import { AlarmDataModule } from './alarm-data/alarm-data.module';
+import { AlarmSettingModule } from './alarm-setting/alarm-setting.module';
+import { NotificationSettingModule } from './notification-setting/notification-setting.module';
 
 @Module({
   imports: [
@@ -26,6 +30,10 @@ import { WeatherRestModule } from './weather-rest/weather-rest.module';
     WeatherModule,
     SensorRestModule,
     WeatherRestModule,
+    AlarmCodeModule,
+    AlarmDataModule,
+    AlarmSettingModule,
+    NotificationSettingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
