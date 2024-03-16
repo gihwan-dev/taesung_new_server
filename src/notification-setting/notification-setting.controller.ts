@@ -21,6 +21,9 @@ export class NotificationSettingController {
   ) {
     console.log('update notification setting device id: ', nsIdx);
     console.log('update notification setting body: ', body);
-    return '';
+    return await this.notificationSettingService.updateNotificationSetting(
+      +nsIdx,
+      body,
+    );
   }
 }
