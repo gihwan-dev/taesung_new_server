@@ -1,26 +1,49 @@
 import { Injectable } from '@nestjs/common';
-import { CreateSettingDto } from './dto/create-setting.dto';
+import { PrismaService } from 'src/prisma.service';
 import { UpdateSettingDto } from './dto/update-setting.dto';
 
 @Injectable()
 export class SettingService {
-  create(createSettingDto: CreateSettingDto) {
-    return 'This action adds a new setting';
+  constructor(private prisma: PrismaService) {}
+
+  async getSetting(diIdx: number) {
+    return (
+      (await this.prisma.device_setting.findFirst({
+        where: {
+          di_idx: diIdx,
+        },
+      })) ?? null
+    );
   }
 
-  findAll() {
-    return `This action returns all setting`;
+  async deleteSetting(diIdx: number) {
+    return await this.prisma.device_setting.deleteMany({
+      where: {
+        di_idx: diIdx,
+      },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} setting`;
-  }
-
-  update(id: number, updateSettingDto: UpdateSettingDto) {
-    return `This action updates a #${id} setting`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} setting`;
+  async updateSetting(diIdx: number, updateSettingDto: UpdateSettingDto) {
+    if (await this.getSetting(diIdx)) {
+      await this.prisma.device_setting.updateMany({
+        where: {
+          di_idx: diIdx,
+        },
+        data: {
+          des_ouOver: +updateSettingDto.ouValue,
+          des_delayTime: +updateSettingDto.delayValue,
+        },
+      });
+      return await this.getSetting(diIdx);
+    } else {
+      return await this.prisma.device_setting.create({
+        data: {
+          di_idx: diIdx,
+          des_ouOver: +updateSettingDto.ouValue,
+          des_delayTime: +updateSettingDto.ouValue,
+        },
+      });
+    }
   }
 }
