@@ -8,3 +8,7 @@
 - Prisma
 - RestAPI
 - Socket.io
+
+## 구현 예정
+
+- 푸시 알림
