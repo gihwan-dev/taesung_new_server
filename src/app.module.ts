@@ -16,6 +16,7 @@ import { AlarmCodeModule } from './alarm-code/alarm-code.module';
 import { AlarmDataModule } from './alarm-data/alarm-data.module';
 import { AlarmSettingModule } from './alarm-setting/alarm-setting.module';
 import { NotificationSettingModule } from './notification-setting/notification-setting.module';
+import { TokenModule } from './token/token.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { NotificationSettingModule } from './notification-setting/notification-s
     AlarmDataModule,
     AlarmSettingModule,
     NotificationSettingModule,
+    TokenModule,
   ],
   controllers: [AppController],
   providers: [AppService],
