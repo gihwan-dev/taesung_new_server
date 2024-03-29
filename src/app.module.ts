@@ -17,6 +17,8 @@ import { AlarmDataModule } from './alarm-data/alarm-data.module';
 import { AlarmSettingModule } from './alarm-setting/alarm-setting.module';
 import { NotificationSettingModule } from './notification-setting/notification-setting.module';
 import { TokenModule } from './token/token.module';
+import { FirebaseModule } from './firebase/firebase.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -36,6 +38,8 @@ import { TokenModule } from './token/token.module';
     AlarmSettingModule,
     NotificationSettingModule,
     TokenModule,
+    FirebaseModule,
+    ScheduleModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService],

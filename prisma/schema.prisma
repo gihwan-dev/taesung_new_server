@@ -115,3 +115,9 @@ model weather_data {
 
   @@id([wd_idx, reg_date])
 }
+
+model push_notification_log {
+  pnl_idx  Int       @id @default(autoincrement())
+  reg_date DateTime? @default(now()) @db.DateTime(0)
+  ad_idx   Int
+}
