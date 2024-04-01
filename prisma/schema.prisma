@@ -79,6 +79,7 @@ model notification_setting {
   ns_lowBattery Boolean
   ns_collect    Boolean
   mod_date      DateTime @default(now()) @db.DateTime(0)
+  user_email    String   @db.Text
 }
 
 /// This table is a partition table and requires additional setup for migrations. Visit https://pris.ly/d/partition-tables for more info.

@@ -6,12 +6,23 @@ export class TokenService {
   constructor(private prisma: PrismaService) {}
 
   async createToken(email: string, token: string) {
-    return await this.prisma.user.update({
+    return this.prisma.user.update({
       where: {
         email,
       },
       data: {
         token,
+      },
+    });
+  }
+
+  async deleteToken(email: string) {
+    return this.prisma.user.update({
+      where: {
+        email,
+      },
+      data: {
+        token: null,
       },
     });
   }

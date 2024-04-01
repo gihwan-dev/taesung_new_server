@@ -36,13 +36,32 @@ export class UserService {
       );
     }
 
+    const deviceInfoList = await this.prisma.device_info.findMany({
+      select: {
+        di_idx: true,
+      },
+    });
+
+    for (const deviceInfo of deviceInfoList) {
+      await this.prisma.notification_setting.create({
+        data: {
+          di_idx: deviceInfo.di_idx,
+          ns_collect: true,
+          ns_doorOpen: true,
+          ns_ouOver: true,
+          ns_lowBattery: true,
+          user_email: user.email,
+        },
+      });
+    }
+
     return {
       message: '유저 생성에 성공했습니다.',
     };
   }
 
   async getUser(userEmail: string) {
-    return await this.prisma.user.findUnique({
+    return this.prisma.user.findUnique({
       where: {
         email: userEmail,
       },
@@ -51,6 +70,7 @@ export class UserService {
         email: true,
         name: true,
         reg_date: true,
+        token: true,
       },
     });
   }

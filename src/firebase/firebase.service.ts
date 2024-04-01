@@ -18,10 +18,7 @@ export class FirebaseService {
     }
   }
 
-  async sendNotifications(tokens: string[], message: MulticastMessage) {
-    return await this.firebaseAdmin.messaging().sendEachForMulticast({
-      tokens,
-      notification: message.notification,
-    });
+  async sendNotifications(message: MulticastMessage) {
+    return await this.firebaseAdmin.messaging().sendEachForMulticast(message);
   }
 }
