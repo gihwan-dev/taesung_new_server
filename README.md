@@ -8,7 +8,6 @@
 - Prisma
 - RestAPI
 - Socket.io
-- Firebase admin
 
 ## 구현 예정
 
