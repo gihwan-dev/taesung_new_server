@@ -4,8 +4,9 @@ import { PrismaService } from 'src/prisma.service';
 @Injectable()
 export class WeatherService {
   constructor(private readonly prisma: PrismaService) {}
+
   async findOne(id: number) {
-    return await this.prisma.weather_data.findFirst({
+    return this.prisma.weather_data.findFirst({
       where: {
         di_idx: id,
       },

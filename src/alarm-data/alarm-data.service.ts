@@ -46,7 +46,6 @@ export class AlarmDataService {
         deviceInfo,
         alarmCode,
       });
-      console.log('message: ', message);
       // 메세지 보내기
       await this.firebase.sendNotifications(message);
       await this.createNotificationLog(alarmData.ad_idx);
@@ -180,6 +179,7 @@ export class AlarmDataService {
 
   async getAlarmData(diIdx: number, acIdx: number) {
     if (acIdx == 0) {
+      //acIdx 가 0이라면 모든 종류 알람 데이터를 보여줌.
       return this.prisma.alarm_data.findMany({
         where: {
           di_idx: diIdx,

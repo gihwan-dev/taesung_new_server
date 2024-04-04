@@ -6,6 +6,6 @@ export class AlarmCodeService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getAlarmCodes() {
-    return await this.prisma.alarm_code.findMany();
+    return this.prisma.alarm_code.findMany();
   }
 }

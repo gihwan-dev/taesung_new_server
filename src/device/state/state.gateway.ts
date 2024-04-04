@@ -1,21 +1,34 @@
 import {
-  WebSocketGateway,
-  SubscribeMessage,
-  MessageBody,
   ConnectedSocket,
+  MessageBody,
+  SubscribeMessage,
+  WebSocketGateway,
+  WebSocketServer,
 } from '@nestjs/websockets';
 import { StateService } from './state.service';
 import { Socket } from 'dgram';
+import { Server } from 'socket.io';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @WebSocketGateway({ namespace: 'state', transport: ['websocket'] })
 export class StateGateway {
+  @WebSocketServer()
+  server: Server;
+
   constructor(private readonly stateService: StateService) {}
+
+  @Cron(CronExpression.EVERY_10_SECONDS)
+  async pullAndEmitData() {
+    const allDeviceInfo = await this.stateService.getAllDeviceInfo();
+    for (const deviceInfo of allDeviceInfo) {
+      const findOneResult = await this.stateService.findOne(deviceInfo.di_idx);
+      this.server.emit('findOneDeviceState', findOneResult);
+    }
+  }
 
   @SubscribeMessage('findOneDeviceState')
   async findOne(@MessageBody() id: number, @ConnectedSocket() client: Socket) {
-    console.log('findOneDeviceState emitted', 'id: ', id);
     const findOneResult = await this.stateService.findOne(+id);
-    console.log('findOneDeviceState', findOneResult);
     client.emit('findOneDeviceState', findOneResult);
   }
 
@@ -25,7 +38,6 @@ export class StateGateway {
     @ConnectedSocket() client: Socket,
   ) {
     const result = await this.stateService.startCollect(id);
-    console.log('startCollect result: ', result);
     client.emit('findOneDeviceState', result);
   }
 
@@ -35,7 +47,6 @@ export class StateGateway {
     @ConnectedSocket() client: Socket,
   ) {
     const result = await this.stateService.resetCollect(id);
-    console.log('resetCollect result: ', result);
     client.emit('findOneDeviceState', result);
   }
 }

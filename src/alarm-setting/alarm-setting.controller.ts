@@ -8,7 +8,6 @@ export class AlarmSettingController {
 
   @Get(':id')
   async getAlarmSetting(@Param('id') id: string) {
-    console.log('get alarm setting device id: ', id);
     return await this.alarmSettingService.getAlarmSetting(+id);
   }
 

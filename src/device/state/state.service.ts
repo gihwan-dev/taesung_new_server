@@ -1,12 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
+import { InfoService } from '../info/info.service';
 
 @Injectable()
 export class StateService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private deviceInfoService: InfoService,
+  ) {}
+
+  async getAllDeviceInfo() {
+    return this.deviceInfoService.findAll();
+  }
 
   async findOne(id: number) {
-    return await this.prisma.device_state.findFirst({
+    return this.prisma.device_state.findFirst({
       where: {
         di_idx: id,
       },
@@ -23,7 +31,7 @@ export class StateService {
       },
     });
 
-    return await this.prisma.device_state.findFirst({
+    return this.prisma.device_state.findFirst({
       where: {
         di_idx: id,
       },
@@ -40,7 +48,7 @@ export class StateService {
       },
     });
 
-    return await this.prisma.device_state.findFirst({
+    return this.prisma.device_state.findFirst({
       where: {
         di_idx: id,
       },
