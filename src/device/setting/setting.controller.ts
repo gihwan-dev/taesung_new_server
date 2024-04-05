@@ -32,8 +32,6 @@ export class SettingController {
     @Param('id') id: string,
     @Body() updateSettingDto: UpdateSettingDto,
   ) {
-    console.log('update device setting diIdx; ', id);
-    console.log('update device setting dto: ', updateSettingDto);
     return await this.settingService.updateSetting(+id, updateSettingDto);
   }
 }

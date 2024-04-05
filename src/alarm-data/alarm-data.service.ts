@@ -25,7 +25,6 @@ export class AlarmDataService {
     const lastAlarmIndex = lastAlarm === null ? 0 : lastAlarm.ad_idx;
     const alarmDataList = await this.getAlarmForPush(lastAlarmIndex);
     await this.iterateListAndSendEachMessage(alarmDataList);
-    console.log('success');
   }
 
   async iterateListAndSendEachMessage(
