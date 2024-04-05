@@ -10,7 +10,6 @@ export class AlarmDataController {
     @Query('di_idx') diIdx: string,
     @Query('ac_idx') acIdx: string,
   ) {
-    console.log('diIdx:', diIdx, 'acIdx:', acIdx);
     return await this.alarmDataService.getAlarmData(+diIdx, +acIdx);
   }
 }
