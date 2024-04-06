@@ -7,7 +7,7 @@ export class AlarmSettingService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getAlarmSetting(id: number) {
-    return await this.prisma.alarm_setting.findFirst({
+    return this.prisma.alarm_setting.findFirst({
       where: {
         di_idx: id,
       },
@@ -18,7 +18,7 @@ export class AlarmSettingService {
     id: number,
     updateNotificationSettingDto: UpdateAlarmSettingDto,
   ) {
-    return await this.prisma.alarm_setting.update({
+    return this.prisma.alarm_setting.update({
       where: {
         as_idx: id,
       },
