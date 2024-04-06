@@ -2,13 +2,14 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma.service';
 import { SignInDto } from './dto/sign-in.dto';
-import { comparePassword } from './auth.utils';
+import { BcryptService } from 'src/bcrypt/bcrypt.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private jwtService: JwtService,
     private prisma: PrismaService,
+    private bcryptService: BcryptService,
   ) {}
 
   async signIn(signInDto: SignInDto) {
@@ -24,7 +25,10 @@ export class AuthService {
       throw new NotFoundException('해당 이메일의 유저를 찾을 수 없습니다.');
     }
 
-    const isPasswordValid = comparePassword(password, user.password);
+    const isPasswordValid = await this.bcryptService.comparePassword(
+      password,
+      user.password,
+    );
 
     if (!isPasswordValid) {
       throw new NotFoundException('비밀번호가 일치하지 않습니다.');

@@ -1,11 +1,14 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { PrismaService } from 'src/prisma.service';
-import { hashPassword } from 'src/auth/auth.utils';
+import { BcryptService } from 'src/bcrypt/bcrypt.service';
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private bcryptService: BcryptService,
+  ) {}
 
   async createUser(createUserDto: CreateUserDto) {
     const { email, password, name } = createUserDto;
@@ -20,7 +23,7 @@ export class UserService {
       throw new BadRequestException('이미 존재하는 이메일입니다.');
     }
 
-    const hashedPassword = await hashPassword(password);
+    const hashedPassword = await this.bcryptService.hashPassword(password);
 
     const user = await this.prisma.user.create({
       data: {

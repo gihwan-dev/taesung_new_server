@@ -23,17 +23,20 @@ export class AlarmDataService {
   async sendPushNotification() {
     const lastAlarm = await this.getLastAlarmIndex();
     const lastAlarmIndex = lastAlarm === null ? 0 : lastAlarm.ad_idx;
-    const alarmDataList = await this.getAlarmForPush(lastAlarmIndex);
+    const alarmDataList =
+      await this.getAlarmForPushNotification(lastAlarmIndex);
     await this.iterateListAndSendEachMessage(alarmDataList);
   }
 
   async iterateListAndSendEachMessage(
-    alarmDataList: AsyncReturnType<typeof this.getAlarmForPush>,
+    alarmDataList: AsyncReturnType<typeof this.getAlarmForPushNotification>,
   ) {
     // 알람 리스트를 순회하면서
     for (const alarmData of alarmDataList) {
       // 해당 알림을 받도록 허용한 유저들의 email 값의 리스트를 구한다.
-      const allowedUserList = await this.findAllowedUserList(alarmData.ac_idx);
+      const allowedUserList = await this.findAllowedUserListByAlarmCode(
+        alarmData.ac_idx,
+      );
       // token 값이 null 인 경우를 필터링 한다.( default 값이 알림 허용이므로 token 이 null 이라도 알람 설정은 허용 값을 가질 수 있다.)
       const allowedUserTokenList =
         await this.getAllowedUserTokenList(allowedUserList);
@@ -89,7 +92,9 @@ export class AlarmDataService {
   }
 
   async getAllowedUserTokenList(
-    allowedUserList: AsyncReturnType<typeof this.findAllowedUserList>,
+    allowedUserList: AsyncReturnType<
+      typeof this.findAllowedUserListByAlarmCode
+    >,
   ) {
     const userList = await this.prisma.user.findMany({
       where: {
@@ -104,7 +109,7 @@ export class AlarmDataService {
     return userList.map((user) => user.token);
   }
 
-  async findAllowedUserList(acIdx: number) {
+  async findAllowedUserListByAlarmCode(acIdx: number) {
     switch (acIdx) {
       case 1:
         return this.prisma.notification_setting.findMany({
@@ -166,7 +171,7 @@ export class AlarmDataService {
     });
   }
 
-  async getAlarmForPush(index: number) {
+  async getAlarmForPushNotification(index: number) {
     return this.prisma.alarm_data.findMany({
       where: {
         ad_idx: {
