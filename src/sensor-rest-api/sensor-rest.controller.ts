@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { SensorRestService } from './sensor-rest.service';
 
-@Controller('sensor-rest')
+@Controller('sensor-rest-api')
 export class SensorRestController {
   constructor(private readonly sensorRestService: SensorRestService) {}
 

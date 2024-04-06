@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { WeatherRestService } from './weather-rest.service';
 
-@Controller('weather-rest')
+@Controller('weather-rest-api')
 export class WeatherRestController {
   constructor(private readonly weatherRestService: WeatherRestService) {}
 
