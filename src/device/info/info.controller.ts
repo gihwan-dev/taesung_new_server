@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { InfoService } from './info.service';
 
-@Controller('info')
+@Controller('device-info')
 export class InfoController {
   constructor(private readonly infoService: InfoService) {}
 
