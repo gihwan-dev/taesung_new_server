@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma.service';
 import { SignInDto } from './dto/sign-in.dto';
@@ -31,7 +35,7 @@ export class AuthService {
     );
 
     if (!isPasswordValid) {
-      throw new NotFoundException('비밀번호가 일치하지 않습니다.');
+      throw new BadRequestException('비밀번호가 일치하지 않습니다.');
     }
 
     const payload = { email: user.email, sub: user.id };

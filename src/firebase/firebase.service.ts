@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
 import { MulticastMessage } from 'firebase-admin/lib/messaging/messaging-api';
-import * as CREDENTIALS from 'src/json/taesung-25dc0-firebase-adminsdk-zxjdj-efc21df5fd.json';
+import * as CREDENTIALS from 'src/json/firebase.json';
 
 @Injectable()
 export class FirebaseService {

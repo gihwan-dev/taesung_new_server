@@ -182,6 +182,9 @@ export class AlarmDataService {
   }
 
   async getAlarmData(diIdx: number, acIdx: number) {
+    if (!diIdx || !acIdx) {
+      throw new BadRequestException('di_idx 와 ac_idx 를 입력해주세요.');
+    }
     if (acIdx == 0) {
       //acIdx 가 0이라면 모든 종류 알람 데이터를 보여줌.
       return this.prisma.alarm_data.findMany({
