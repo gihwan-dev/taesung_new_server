@@ -19,9 +19,12 @@ export class AlarmDataService {
     private firebase: FirebaseService,
   ) {}
 
+  // 매 5초마다 알림을 보낼 수 있는지 확인하고 알림을 보내는 함수
   @Cron(CronExpression.EVERY_5_SECONDS)
   async sendPushNotification() {
+    // alarm_log 테이블을 통해 마지막으로 보낸 알림의 인덱스를 가져온다.
     const lastAlarm = await this.getLastAlarmIndex();
+    // 저장된 알람 로그가 없다면 모든 알람 데이터를 가져옵니다. (초기 동작시에만 해당됨.)
     const lastAlarmIndex = lastAlarm === null ? 0 : lastAlarm.ad_idx;
     const alarmDataList =
       await this.getAlarmForPushNotification(lastAlarmIndex);
@@ -109,6 +112,7 @@ export class AlarmDataService {
     return userList.map((user) => user.token);
   }
 
+  // 알람 코드에 따라 알림을 받을 수 있는 유저들을 찾는 함수
   async findAllowedUserListByAlarmCode(acIdx: number) {
     switch (acIdx) {
       case 1:
