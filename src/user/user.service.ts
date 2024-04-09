@@ -35,7 +35,7 @@ export class UserService {
 
     if (!user) {
       throw new BadRequestException(
-        '유저 생성에 실패했습니다. 다시 시도해주세요.',
+        '회원 가입에 실패했습니다. 다시 시도해주세요.',
       );
     }
 
@@ -45,6 +45,7 @@ export class UserService {
       },
     });
 
+    // 해당 유저에 관련된 알림 설정을 생성합니다.
     for (const deviceInfo of deviceInfoList) {
       await this.prisma.notification_setting.create({
         data: {
@@ -59,7 +60,7 @@ export class UserService {
     }
 
     return {
-      message: '유저 생성에 성공했습니다.',
+      message: '회원가입에 성공했습니다.',
     };
   }
 
